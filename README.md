@@ -1,3 +1,3 @@
-AWS Amazon Managed Blockchain QuickStart  
+AWS Managed Blockchain QuickStart  
 ===============================================
 
