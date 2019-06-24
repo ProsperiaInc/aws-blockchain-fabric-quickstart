@@ -103,7 +103,7 @@ Use the AWS Console to configure the Amazon Managed Blockchain Fabric Peer.  Thi
 ### Amazon Managed Blockchain Dashboard
 Click on "Networks"  
 Click on "BlockChainDemo"   
-Click on "Members"  
+Click on "Members" tab 
  
 Locate "Members owned by you" and Select "KAL-Technology"  
 Click on "Create peer node"  
@@ -134,7 +134,7 @@ NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environm
 source configure-blockchain-environment
 ```
 
-### Run CloudFormation
+### Run CloudFormation Script to Create Fabric Client Node
 Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.
 You will find some useful information in the Outputs tab of the CloudFormation stack once the stack 
 is complete. We will use this information in later steps.
@@ -143,7 +143,24 @@ cd ~/non-profit-blockchain/ngo-fabric
 ./3-vpc-client-node.sh
 ```
 
+## Remove Your Amazon Managed Blockchain 
 
+### AWS CloudFormation
+Delete "BlockChainDemo-fabric-client-node" Stack  
+
+### Amazon Managed Blockchain Dashboard
+Click on "Networks"  
+Click on "BlockChainDemo"   
+Click on "Members" tab  
+
+Locate "Members owned by you"    
+Select "KAL-Technology"  
+Click on "Delete member"  
+
+Note: This will delete the peer node, the member, and finally, the Fabric network. Should take a couple of minutes to complete.
+
+### AWS EC2
+Delete "blockchain-console" Instance  
 
 ## References
 
