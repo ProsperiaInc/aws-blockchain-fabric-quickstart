@@ -24,7 +24,7 @@ export MEMBERNAME=$membername
 export MEMBERID=$memberid
 export NETWORKVERSION=$networkversion
 export ADMINUSER=$adminuser
-export ADMINPWD=$adminpws
+export ADMINPWD=$adminpwd
 export VPCENDPOINTSERVICENAME=$vpcendpointservicename
 
 echo

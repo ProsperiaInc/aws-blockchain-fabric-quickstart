@@ -9,19 +9,52 @@ cp templates/exports-template.sh fabric-exports.sh.txt
 
 sed "s|<your network name>|${NETWORKNAME}|; \
      s|<the member name you entered when creating your Fabric network>|${MEMBERNAME}|; \
-     s|<the admin user name you entered when creating your Fabric network>|${ADMINUSER}|" \
-     s|<the admin user name you entered when creating your Fabric network>|${ADMINPWD}|" \
-     s|<your network ID, from the AWS Console>|${NETWORKID}|" \
+     s|<the admin user name you entered when creating your Fabric network>|${ADMINUSER}|; \
+     s|<the admin password you entered when creating your Fabric network>|${ADMINPWD}|; \
+     s|<your network ID, from the AWS Console>|${NETWORKID}|; \
      s|<your member ID, from the AWS Console>|${MEMBERID}|" \
      fabric-exports.sh.txt > fabric-exports.sh
+     
+cd ~/non-profit-blockchain/ngo-fabric
+source fabric-exports.sh
+
+echo $PEERSERVICEENDPOINT
+
+
+Check the peer export file exists and that it contains a number of export keys with values:
+
+cat ~/peer-exports.sh 
+If the file has values for all keys, source it:
+
+source ~/peer-exports.sh 
+
+aws s3 cp s3://us-east-1.managedblockchain/etc/managedblockchain-tls-chain.pem  /home/ec2-user/managedblockchain-tls-chain.pem  
+
+
+export PATH=$PATH:/home/ec2-user/go/src/github.com/hyperledger/fabric-ca/bin
+cd ~
+fabric-ca-client enroll -u https://$ADMINUSER:$ADMINPWD@$CASERVICEENDPOINT --tls.certfiles /home/ec2-user/managedblockchain-tls-chain.pem -M /home/ec2-user/admin-msp 
+
+
+mkdir -p /home/ec2-user/admin-msp/admincerts
+cp ~/admin-msp/signcerts/* ~/admin-msp/admincerts/
+cd ~/non-profit-blockchain/ngo-fabric
 
 # Step 5 - Update the configtx channel configuration
+
+echo $MEMBERID
 
 cd ~
 cp ~/non-profit-blockchain/ngo-fabric/configtx.yaml ~/configtx.yaml.txt
 sed "s|<REPLACE WITH MEMBER_ID>|${MEMBERID}|" configtx.yaml.txt > configtx.yaml
 
 docker exec cli configtxgen -outputCreateChannelTx /opt/home/$CHANNEL.pb -profile OneOrgChannel -channelID $CHANNEL --configPath /opt/home/
+
+ls -lt ~/$CHANNEL.pb 
+
+###
+# stopped here
+###
 
 # Step 6 - Create a Fabric channel
 
