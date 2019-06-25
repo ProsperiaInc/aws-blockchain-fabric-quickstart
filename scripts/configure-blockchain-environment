@@ -1,7 +1,8 @@
 # This is a stupid script. If you have more than 1 blockchain it will fail.
-# Use at your own risk. But if you followed the installation instructions to the letter it should make the config process fast.
+# Use at your own risk. But if you followed the installation instructions to the letter it 
+# should make the config process fast.
 
-# This will use aws cli to populate .kube/control-kubeconfig and .kube/aws-auth-cm.yaml with the correct parameters
+# This will use aws cli to populate environment variables with the correct values
 
 networkid=`aws managedblockchain list-networks --query Networks[].Id --output text`
 networkname=`aws managedblockchain list-networks --query Networks[].Name --output text`
@@ -11,6 +12,7 @@ export NETWORKID=${networkid}
 export NETWORKNAME=${networkname}
 export VPCENDPOINTSERVICENAME=$(aws managedblockchain get-network --region $REGION --network-id $NETWORKID --query 'Network.VpcEndpointServiceName' --output text)
 
+echo "**** The following environment variables have been set ****"
 echo export REGION=us-east-1
 echo export NETWORKID=${networkid}
 echo export NETWORKNAME=${networkname}
