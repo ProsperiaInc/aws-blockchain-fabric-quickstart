@@ -4,15 +4,27 @@
 
 # This will use aws cli to populate environment variables with the correct values
 
+
 region=us-east-1
+adminuser=admin
+adminpwd=Administration01
+
 networkid=$(aws managedblockchain list-networks --query 'Networks[0].Id' --output text)
 networkname=$(aws managedblockchain list-networks --query 'Networks[0].Name' --output text)
+membername=$(aws managedblockchain list-members --network-id $networkid --query 'Members[0].Name' --output text)
+memberid=$(aws managedblockchain list-members --network-id $networkid --query 'Members[0].Id' --output text)
+networkversion=$(aws managedblockchain list-networks  --query 'Networks[0].FrameworkVersion' --output text)
 vpcendpointservicename=$(aws managedblockchain get-network --region $region --network-id $networkid \
                        --query 'Network.VpcEndpointServiceName' --output text)
 
 export REGION=$region
 export NETWORKID=$networkid
 export NETWORKNAME=$networkname
+export MEMBERNAME=$membername
+export MEMBERID=$memberid
+export NETWORKVERSION=$networkversion
+export ADMINUSER=$adminuser
+export ADMINPWD=$adminpws
 export VPCENDPOINTSERVICENAME=$vpcendpointservicename
 
 echo
@@ -20,5 +32,10 @@ echo "** The following environment variables have been set **"
 echo REGION=$region
 echo NETWORKID=$networkid
 echo NETWORKNAME=$networkname
+echo MEMBERNAME=$membername
+echo MEMBERID=$memberid
+echo NETWORKVERSION=$networkversion
+echo ADMINUSER=$adminuser
+echo ADMINPWD=$adminpwd
 echo VPCENDPOINTSERVICENAME=$vpcendpointservicename
 echo

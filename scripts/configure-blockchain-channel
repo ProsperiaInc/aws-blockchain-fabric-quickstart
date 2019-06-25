@@ -6,12 +6,13 @@ git clone https://github.com/aws-samples/non-profit-blockchain.git
 
 cd ~/non-profit-blockchain/ngo-fabric
 cp templates/exports-template.sh fabric-exports.sh.txt
+
 sed "s|<your network name>|${NETWORKNAME}|; \
-     s|<the member name you entered when creating your Fabric network>||; \
-     s|<the admin user name you entered when creating your Fabric network>||" \
-     s|<the admin user name you entered when creating your Fabric network>||" \
-     s|<your network ID, from the AWS Console>||" \
-     s|<your member ID, from the AWS Console>||" \
+     s|<the member name you entered when creating your Fabric network>|${MEMBERNAME}|; \
+     s|<the admin user name you entered when creating your Fabric network>|${ADMINUSER}|" \
+     s|<the admin user name you entered when creating your Fabric network>|${ADMINPWD}|" \
+     s|<your network ID, from the AWS Console>|${NETWORKID}|" \
+     s|<your member ID, from the AWS Console>|${MEMBERID}|" \
      fabric-exports.sh.txt > fabric-exports.sh
 
 # Step 5 - Update the configtx channel configuration
