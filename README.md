@@ -118,7 +118,7 @@ Note: Should take a couple of minutes to complete.  Wait till you see "Available
 ## Create Amazon Managed Blockchain Fabric Client Node
 Use the AWS Console to configure the Amazon Managed Blockchain Fabric Client node.  This is a step by step process.  
 
-### Connect to EC2 Instance
+### Connect to EC2 Blockchain Console Instance
 Using ssh from your local machine, connect to your AWS EC2 Instance
 
 
