@@ -5,12 +5,12 @@
 # This will use aws cli to populate environment variables with the correct values
 
 export REGION=us-east-1
-export NETWORKID=${aws managedblockchain list-networks --query Networks[].Id --output text}
-export NETWORKNAME=${aws managedblockchain list-networks --query Networks[].Name --output text}
+export NETWORKID=$(aws managedblockchain list-networks --query Networks[].Id --output text)
+export NETWORKNAME=$(aws managedblockchain list-networks --query Networks[].Name --output text)
 export VPCENDPOINTSERVICENAME=$(aws managedblockchain get-network --region $REGION --network-id $NETWORKID --query 'Network.VpcEndpointServiceName' --output text)
 
 echo "**** The following environment variables have been set ****"
 echo export REGION=us-east-1
-echo export NETWORKID=${networkid}
-echo export NETWORKNAME=${networkname}
+echo export NETWORKID=$networkid
+echo export NETWORKNAME=$networkname
 echo export VPCENDPOINTSERVICENAME=$VPCENDPOINTSERVICENAME
