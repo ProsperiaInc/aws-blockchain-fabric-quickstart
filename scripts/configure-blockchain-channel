@@ -2,7 +2,6 @@
 # Step 4 - Prepare the Fabric client node and enroll an identity
 
 cd ~
-git clone https://github.com/aws-samples/non-profit-blockchain.git
 
 cd ~/non-profit-blockchain/ngo-fabric
 cp templates/exports-template.sh fabric-exports.sh.txt
