@@ -77,10 +77,11 @@ Starter
 ```
 Network name and description
 ```
-Network name: BlockChainDemo
-Description: BlockChainDemo
+Network name: MyFabric
+Description: MyFabric
 ```
 Click on "Next"  
+
 Member configuration
 ```
 Member name: KAL-Technology
@@ -102,7 +103,7 @@ Use the AWS Console to configure the Amazon Managed Blockchain Fabric Peer.  Thi
 
 ### Amazon Managed Blockchain Dashboard
 Click on "Networks"  
-Click on "BlockChainDemo"   
+Click on "MyFabric"   
 Click on "Members" tab 
  
 Locate "Members owned by you" and Select "KAL-Technology"  
@@ -142,15 +143,42 @@ is complete. We will use this information in later steps.
 cd ~/non-profit-blockchain/ngo-fabric
 ./3-vpc-client-node.sh
 ```
+## Prepare the Amazon Managed Blockchain Fabric Client Node and Enroll Identity
 
+cd ~
+ssh ec2-user@<dns of EC2 instance> -i ~/<Fabric network name>-keypair.pem
+
+cd ~
+git clone https://github.com/kskalvar/aws-blockchain-fabric-quickstart.git
+
+sudo -i
+curl -O https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+
+
+/usr/local/bin/pip install awscli --upgrade
+exit
+
+### Configure AWS CLI
+aws configure
+```
+AWS Access Key ID []: <Your Access Key ID>
+AWS Secret Access Key []: <Your Secret Access Key>
+Default region name []: us-east-1
+```
+### Test aws cli
+Test aws cli is configured properly by doing a simple test
+```
+aws s3 ls
+```
 ## Remove Your Amazon Managed Blockchain 
 
 ### AWS CloudFormation
-Delete "BlockChainDemo-fabric-client-node" Stack  
+Delete "MyFabric-fabric-client-node" Stack  
 
 ### Amazon Managed Blockchain Dashboard
 Click on "Networks"  
-Click on "BlockChainDemo"   
+Click on "MyFabric"   
 Click on "Members" tab  
 
 Locate "Members owned by you"    
@@ -164,5 +192,5 @@ Delete "blockchain-console" Instance
 
 ## References
 
-Building and deploying an application for Hyperledger Fabric on Amazon Managed Blockchain
+Building and deploying an application for Hyperledger Fabric on Amazon Managed Blockchain  
 https://github.com/aws-samples/non-profit-blockchain
