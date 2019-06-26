@@ -1,11 +1,11 @@
-
+# Part 1
 # Step 4 - Prepare the Fabric client node and enroll an identity
 
 cd ~
 git clone https://github.com/aws-samples/non-profit-blockchain.git
 
 cd ~/non-profit-blockchain/ngo-fabric
-cp templates/exports-template.sh fabric-exports.sh.txt
+cp ~/aws-blockchain-fabric-quickstart/scripts/fabric-exports.sh.txt fabric-exports.sh.txt
 
 sed "s|<your network name>|${NETWORKNAME}|; \
      s|<the member name you entered when creating your Fabric network>|${MEMBERNAME}|; \
@@ -15,46 +15,34 @@ sed "s|<your network name>|${NETWORKNAME}|; \
      s|<your member ID, from the AWS Console>|${MEMBERID}|" \
      fabric-exports.sh.txt > fabric-exports.sh
      
-cd ~/non-profit-blockchain/ngo-fabric
 source fabric-exports.sh
-
 echo $PEERSERVICEENDPOINT
 
-
-Check the peer export file exists and that it contains a number of export keys with values:
-
+# Check the peer export file exists and that it contains a number of export keys with values:
 cat ~/peer-exports.sh 
-If the file has values for all keys, source it:
-
 source ~/peer-exports.sh 
 
+# Get the latest version of the Managed Blockchain PEM file.
 aws s3 cp s3://us-east-1.managedblockchain/etc/managedblockchain-tls-chain.pem  /home/ec2-user/managedblockchain-tls-chain.pem  
 
-
+# Enroll an admin identity with the Fabric CA
 export PATH=$PATH:/home/ec2-user/go/src/github.com/hyperledger/fabric-ca/bin
 cd ~
 fabric-ca-client enroll -u https://$ADMINUSER:$ADMINPWD@$CASERVICEENDPOINT --tls.certfiles /home/ec2-user/managedblockchain-tls-chain.pem -M /home/ec2-user/admin-msp 
-
 
 mkdir -p /home/ec2-user/admin-msp/admincerts
 cp ~/admin-msp/signcerts/* ~/admin-msp/admincerts/
 cd ~/non-profit-blockchain/ngo-fabric
 
 # Step 5 - Update the configtx channel configuration
-
 echo $MEMBERID
 
-cd ~
 cp ~/non-profit-blockchain/ngo-fabric/configtx.yaml ~/configtx.yaml.txt
-sed "s|<REPLACE WITH MEMBER_ID>|${MEMBERID}|" configtx.yaml.txt > configtx.yaml
+sed "s|<REPLACE WITH MEMBER_ID>|${MEMBERID}|" ~/configtx.yaml.txt > ~/configtx.yaml
 
 docker exec cli configtxgen -outputCreateChannelTx /opt/home/$CHANNEL.pb -profile OneOrgChannel -channelID $CHANNEL --configPath /opt/home/
 
 ls -lt ~/$CHANNEL.pb 
-
-###
-# stopped here
-###
 
 # Step 6 - Create a Fabric channel
 
@@ -71,13 +59,11 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
 
 ls -lt /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
 
-
 # Step 7 - Join your peer node to the channel
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer channel join -b $CHANNEL.block  -o $ORDERER --cafile $CAFILE --tls
-
 
 # Step 8 - Install chaincode on your peer node
 
@@ -86,6 +72,7 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
     cli peer chaincode install -n $CHAINCODENAME -v $CHAINCODEVERSION -p $CHAINCODEDIR
 
 # Step 9 - Instantiate the chaincode on the channel
+# Instantiate chaincode on Fabric channel. This statement may take around 30 seconds, and you won't see a specific success response.
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
@@ -110,9 +97,3 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer chaincode query -C $CHANNEL -n $CHAINCODENAME -c '{"Args":["query","a"]}' 
-
-
-
-
-
-
