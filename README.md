@@ -1,7 +1,6 @@
 AWS Managed Blockchain QuickStart  
 ===============================================
-This solution shows how to create an AWS Managed Blockchain and deploy a sample application. This readme updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Blockchain" referenced below and provides a more basic step by step process.  Unfortunately this is a pretty manual effort right now.
-
+This solution shows how to create an AWS Managed Fabric Blockchain and deploy a sample application. This readme updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Blockchain" referenced below and provides a more basic step by step process.
 
 ## Configure AWS EC2 Blockchain Console Instance
 Use AWS Console to configure the EC2 Instance for kubectl.  This is a step by step process.
@@ -33,7 +32,6 @@ Key: Name
 Value: blockchain-console
 ```
 Click on "Next: Configure Security Group"  
-
 Click on "Review and Launch"    
 Click on "Launch"  
 ```
@@ -97,7 +95,6 @@ Click on "Create network and member"
 
 Note: Should take about 20 minutes to complete.  Wait till you see "Available" appear in "Status" column.  
 
-
 ## Create Amazon Managed Blockchain Fabric Peer
 Use the AWS Console to configure the Amazon Managed Blockchain Fabric Peer.  This is a step by step process.
 
@@ -107,7 +104,9 @@ Click on "MyFabric"
 Click on "Members" tab 
  
 Locate "Members owned by you" and Select "KAL-Technology"  
-Click on "Create peer node"  
+Click on "Create peer node"    
+
+Create peer node 
 ```
 Blockchain instance type: bc.t3.small
 Availability Zone: us-east-1a
@@ -120,45 +119,35 @@ Note: Should take a couple of minutes to complete.  Wait till you see "Available
 Use the AWS Console to configure the Amazon Managed Blockchain Fabric Client node.  This is a step by step process.  
 
 ### Connect to EC2 Blockchain Console Instance
-Using ssh from your local machine, connect to your AWS EC2 Instance
-
+Using ssh from your local machine, connect to your AWS EC2 Instance tagged "blockchain-console"  
 
 ### Configure BlockChain Environment
-Configure environment to launch CloudFormation script  
+Configure BlockChain Fabric environment variables   
 ```
 NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environment".  
        You may run this script to automate the creation and population of environment 
        variables.  It uses the naming convention I specified in this HOW-TO.  So if you didn't
-       use the naming convention it won't work.  If you do use the script then all
-       you need to do is run the "Test Cluster" and "Test Cluster Nodes" steps.
+       use the naming convention it won't work.
        
 source configure-blockchain-environment
 ```
 
 ### Run CloudFormation Script to Create Fabric Client Node
-Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.
-You will find some useful information in the Outputs tab of the CloudFormation stack once the stack 
-is complete. We will use this information in later steps.
+Launches a AWS CloudFormation script to create the Fabric Client Node
 ```
 cd ~/non-profit-blockchain/ngo-fabric
 ./3-vpc-client-node.sh
 ```
+Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.  
+Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS of the EC2 instance 
+
 ## Prepare the Amazon Managed Blockchain Fabric Client Node and Enroll Identity
-
+You'll need to ssh into the the EC2 instance tagged "ManagedBlockchainWorkshopEC2ClientInstance".  The Public  
+DNS you captured above.
+```
 cd ~
-ssh ec2-user@<dns of EC2 instance> -i ~/<Fabric network name>-keypair.pem
-
-cd ~
-git clone https://github.com/kskalvar/aws-blockchain-fabric-quickstart.git
-
-sudo -i
-curl -O https://bootstrap.pypa.io/get-pip.py
-python get-pip.py
-
-
-/usr/local/bin/pip install awscli --upgrade
-exit
-
+ssh -i MyFabric-keypair.pem ec2-user@<EC2URL Public DNS of the EC2 instance>
+```
 ### Configure AWS CLI
 aws configure
 ```
@@ -171,6 +160,30 @@ Test aws cli is configured properly by doing a simple test
 ```
 aws s3 ls
 ```
+### Checkout aws-blockchain-fabric-quickstart from GitHub 
+aws-blockchain-fabric-quickstart from GitHub has scripts used to speed up configuration process
+```
+cd ~
+git clone https://github.com/kskalvar/aws-blockchain-fabric-quickstart.git
+```
+### Upgrade AWS CLI
+UPgrad the AWS Cli on the Fabric Client
+```
+sudo curl -O https://bootstrap.pypa.io/get-pip.py
+sudo python get-pip.py
+sudo /usr/local/bin/pip install awscli --upgrade
+```
+### Configure BlockChain Environment
+Configure BlockChain Fabric environment variables  
+```
+NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environment".  
+       You may run this script to automate the creation and population of environment 
+       variables.  It uses the naming convention I specified in this HOW-TO.  So if you didn't
+       use the naming convention it won't work.
+       
+source configure-blockchain-environment
+```
+
 ## Remove Your Amazon Managed Blockchain 
 
 ### AWS CloudFormation
@@ -187,8 +200,13 @@ Click on "Delete member"
 
 Note: This will delete the peer node, the member, and finally, the Fabric network. Should take a couple of minutes to complete.
 
-### AWS EC2
+### AWS EC2 Dashboard
+Click on "Instances/Instances" on the left hand menu
 Delete "blockchain-console" Instance  
+
+Click on "Network & Security/Key Pairs" on the left hand menu  
+Select " MyFabric-keypair"  
+Click on "Delete"  
 
 ## References
 
