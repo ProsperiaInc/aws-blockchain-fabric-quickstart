@@ -4,6 +4,7 @@
 
 # This will use aws cli to populate environment variables with the correct values
 
+export AWS_DEFAULT_REGION=us-east-1
 
 region=us-east-1
 adminuser=admin
