@@ -1,8 +1,6 @@
-echo *** Build Blockchain Fabric Network
-echo *** Part 1 
+echo *** Build Blockchain Fabric Network Part 1 
 
 echo *** Step 4 - Prepare the Fabric client node and enroll an identity
-
 cd ~
 git clone https://github.com/aws-samples/non-profit-blockchain.git
 
@@ -36,6 +34,9 @@ mkdir -p /home/ec2-user/admin-msp/admincerts
 cp ~/admin-msp/signcerts/* ~/admin-msp/admincerts/
 cd ~/non-profit-blockchain/ngo-fabric
 
+sleep 25
+
+echo
 echo *** Step 5 - Update the configtx channel configuration
 echo $MEMBERID
 
@@ -43,36 +44,41 @@ cp ~/non-profit-blockchain/ngo-fabric/configtx.yaml ~/configtx.yaml.txt
 sed "s|<REPLACE WITH MEMBER_ID>|${MEMBERID}|" ~/configtx.yaml.txt > ~/configtx.yaml
 
 docker exec cli configtxgen -outputCreateChannelTx /opt/home/$CHANNEL.pb -profile OneOrgChannel -channelID $CHANNEL --configPath /opt/home/
-
 ls -lt ~/$CHANNEL.pb 
+sleep 25
 
+echo
 echo *** Step 6 - Create a Fabric channel
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer channel create -c $CHANNEL -f /opt/home/$CHANNEL.pb -o $ORDERER --cafile $CAFILE --tls --timeout 900s
-
 ls -lt /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem"  \
     -e "CORE_PEER_ADDRESS=$PEER"  -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer channel fetch oldest /opt/home/fabric-samples/chaincode/hyperledger/fabric/peer/$CHANNEL.block \
     -c $CHANNEL -o $ORDERER --cafile /opt/home/managedblockchain-tls-chain.pem --tls   
-
 ls -lt /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
+sleep 25
 
+echo
 echo *** Step 7 - Join your peer node to the channel
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer channel join -b $CHANNEL.block  -o $ORDERER --cafile $CAFILE --tls
+sleep 25
 
+echo
 echo *** Step 8 - Install chaincode on your peer node
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer chaincode install -n $CHAINCODENAME -v $CHAINCODEVERSION -p $CHAINCODEDIR
+sleep 25
 
+echo
 echo *** Step 9 - Instantiate the chaincode on the channel
 echo *** Instantiate chaincode on Fabric channel. This statement may take around 30 seconds, and you won't see a specific success response.
 
@@ -80,20 +86,26 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer chaincode instantiate -o $ORDERER -C $CHANNEL -n $CHAINCODENAME -v $CHAINCODEVERSION \
     -c '{"Args":["init","a","100","b","200"]}' --cafile $CAFILE --tls
+sleep 25
 
+echo
 echo *** Step 10 - Query the chaincode
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer chaincode query -C $CHANNEL -n $CHAINCODENAME -c '{"Args":["query","a"]}' 
+sleep 25
 
+echo
 echo *** Step 11 - Invoke a transaction
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer chaincode invoke -o $ORDERER -C $CHANNEL -n $CHAINCODENAME \
     -c '{"Args":["invoke","a","b","10"]}' --cafile $CAFILE --tls
+sleep 25
 
+echo
 echo *** Step 12 - Query the chaincode again and check the change in value
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
