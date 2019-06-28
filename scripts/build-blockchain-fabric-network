@@ -79,7 +79,6 @@ sleep 25
 
 echo
 echo  Step 9 - Instantiate the chaincode on the channel
-echo  Instantiate chaincode on Fabric channel. This statement may take around 30 seconds, and you won't see a specific success response.
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
