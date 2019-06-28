@@ -17,18 +17,22 @@ sed "s|<your network name>|${NETWORKNAME}|; \
      
 source fabric-exports.sh
 echo $PEERSERVICEENDPOINT
+sleep 25
 
 # Check the peer export file exists and that it contains a number of export keys with values:
 cat ~/peer-exports.sh 
-source ~/peer-exports.sh 
+source ~/peer-exports.sh
+sleep 25
 
 # Get the latest version of the Managed Blockchain PEM file.
 aws s3 cp s3://us-east-1.managedblockchain/etc/managedblockchain-tls-chain.pem  /home/ec2-user/managedblockchain-tls-chain.pem  
+sleep 25
 
 # Enroll an admin identity with the Fabric CA
 export PATH=$PATH:/home/ec2-user/go/src/github.com/hyperledger/fabric-ca/bin
 cd ~
 fabric-ca-client enroll -u https://$ADMINUSER:$ADMINPWD@$CASERVICEENDPOINT --tls.certfiles /home/ec2-user/managedblockchain-tls-chain.pem -M /home/ec2-user/admin-msp 
+sleep 25 
 
 mkdir -p /home/ec2-user/admin-msp/admincerts
 cp ~/admin-msp/signcerts/* ~/admin-msp/admincerts/
@@ -41,6 +45,7 @@ echo $MEMBERID
 
 cp ~/non-profit-blockchain/ngo-fabric/configtx.yaml ~/configtx.yaml.txt
 sed "s|<REPLACE WITH MEMBER_ID>|${MEMBERID}|" ~/configtx.yaml.txt > ~/configtx.yaml
+sleep 25
 
 docker exec cli configtxgen -outputCreateChannelTx /opt/home/$CHANNEL.pb -profile OneOrgChannel -channelID $CHANNEL --configPath /opt/home/
 ls -lt ~/$CHANNEL.pb 
@@ -53,6 +58,7 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer channel create -c $CHANNEL -f /opt/home/$CHANNEL.pb -o $ORDERER --cafile $CAFILE --tls --timeout 900s
 ls -lt /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
+sleep 25 
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem"  \
     -e "CORE_PEER_ADDRESS=$PEER"  -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
