@@ -2,8 +2,75 @@ AWS Managed Blockchain QuickStart
 ===============================================
 This solution shows how to create an AWS Managed Fabric Blockchain and deploy a sample application. This readme updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Blockchain" referenced below and provides a more basic step by step process.
 
-## Configure AWS EC2 Blockchain Console Instance
-Use AWS Console to configure the EC2 Instance for kubectl.  This is a step by step process.
+Steps:  
+
+    
+  Create Amazon Managed Blockchain    
+  Create Amazon Managed Blockchain Fabric Peer  
+  Create AWS EC2 Blockchain Console Instance   
+  Create Amazon Managed Blockchain Fabric Client Node    
+  Prepare the Amazon Managed Blockchain Fabric Client Node and Enroll Identity  
+  
+  Remove Your Amazon Managed Blockchain    
+
+## Create Amazon Managed Blockchain 
+Use the AWS Console to configure the Amazon Managed Blockchain.  This is a step by step process.
+
+### Amazon Managed Blockchain Dashboard
+Click on "Create a network"  
+
+Blockchain frameworks
+```
+Hyperledger Fabric 1.2
+```  
+Network edition
+```
+Starter
+```
+Network name and description
+```
+Network name: MyFabric
+```
+Click on "Next"  
+
+Member configuration
+```
+Member name: KAL-Technology
+```
+Hyperledger Fabric certificate authority (CA) configuration  
+```
+Admin username: admin
+Admin password: Administration01
+```
+Click on "Next"  
+Click on "Create network and member"  
+```
+Note: Should take about 20 minutes to complete.  Wait till you see "Available" appear in "Status" column.  
+```
+## Create Amazon Managed Blockchain Fabric Peer
+Use the AWS Console to configure the Amazon Managed Blockchain Fabric Peer.  This is a step by step process.
+
+### Amazon Managed Blockchain Dashboard
+Click on "Networks"  
+Click on "MyFabric"   
+Click on "Members" tab 
+ 
+Locate "Members owned by you"  
+Select "KAL-Technology"  
+Click on "Create peer node"    
+
+Create peer node 
+```
+Blockchain instance type: bc.t3.small
+Availability Zone: us-east-1a
+```
+Click on "Create peer node"  
+```
+Note: Should take a couple of minutes to complete.  Wait till you see "Available" appear in "Status" column under "Peer Nodes".
+```
+
+## Create AWS EC2 Blockchain Console Instance
+Use AWS Console to configure the an EC2 Instance for blockchain fabric console.  This is a step by step process.
 
 ### AWS EC2 Dashboard  
 Click on "Launch Instance"  
@@ -59,62 +126,6 @@ Test aws cli is configured properly by doing a simple test
 aws s3 ls
 ```
 
-## Create Amazon Managed Blockchain 
-Use the AWS Console to configure the Amazon Managed Blockchain.  This is a step by step process.
-
-### Amazon Managed Blockchain Dashboard
-Click on "Create a network"  
-
-Blockchain frameworks
-```
-Hyperledger Fabric 1.2
-```  
-Network edition
-```
-Starter
-```
-Network name and description
-```
-Network name: MyFabric
-Description: MyFabric
-```
-Click on "Next"  
-
-Member configuration
-```
-Member name: KAL-Technology
-Description: KAL-Technology
-```
-Hyperledger Fabric certificate authority (CA) configuration  
-```
-Admin username: admin
-Admin password: Administration01
-```
-Click on "Next"  
-Click on "Create network and member"  
-
-Note: Should take about 20 minutes to complete.  Wait till you see "Available" appear in "Status" column.  
-
-## Create Amazon Managed Blockchain Fabric Peer
-Use the AWS Console to configure the Amazon Managed Blockchain Fabric Peer.  This is a step by step process.
-
-### Amazon Managed Blockchain Dashboard
-Click on "Networks"  
-Click on "MyFabric"   
-Click on "Members" tab 
- 
-Locate "Members owned by you" and Select "KAL-Technology"  
-Click on "Create peer node"    
-
-Create peer node 
-```
-Blockchain instance type: bc.t3.small
-Availability Zone: us-east-1a
-```
-Click on "Create peer node"  
-
-Note: Should take a couple of minutes to complete.  Wait till you see "Available" appear in "Status" column under "Peer Nodes".
-
 ## Create Amazon Managed Blockchain Fabric Client Node
 Use the AWS Console to configure the Amazon Managed Blockchain Fabric Client node.  This is a step by step process.  
 
@@ -131,7 +142,6 @@ NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environm
        
 source configure-blockchain-environment
 ```
-
 ### Run CloudFormation Script to Create Fabric Client Node
 Launches a AWS CloudFormation script to create the Fabric Client Node
 ```
@@ -142,36 +152,26 @@ Check the progress in the AWS CloudFormation console and wait until the stack is
 Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS of the EC2 instance 
 
 ## Prepare the Amazon Managed Blockchain Fabric Client Node and Enroll Identity
-You'll need to ssh into the the EC2 instance tagged "ManagedBlockchainWorkshopEC2ClientInstance".  The Public  
-DNS you captured above.
+You'll need to ssh into the the EC2 instance tagged "ManagedBlockchainWorkshopEC2ClientInstance".  
 ```
 cd ~
+aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text
 ssh -i MyFabric-keypair.pem ec2-user@<EC2URL Public DNS of the EC2 instance>
 ```
 ### Configure AWS CLI
-aws configure
+You only need to set the region environment
 ```
-AWS Access Key ID []: <Your Access Key ID>
-AWS Secret Access Key []: <Your Secret Access Key>
-Default region name []: us-east-1
+export AWS_DEFAULT_REGION=us-east-1
 ```
 ### Test aws cli
 Test aws cli is configured properly by doing a simple test
 ```
 aws s3 ls
 ```
-### Checkout aws-blockchain-fabric-quickstart from GitHub 
-aws-blockchain-fabric-quickstart from GitHub has scripts used to speed up configuration process
-```
-cd ~
-git clone https://github.com/kskalvar/aws-blockchain-fabric-quickstart.git
-```
 ### Upgrade AWS CLI
-UPgrad the AWS Cli on the Fabric Client
+Upgrade the AWS Cli on the Fabric Client
 ```
-sudo curl -O https://bootstrap.pypa.io/get-pip.py
-sudo python get-pip.py
-sudo /usr/local/bin/pip install awscli --upgrade
+sudo pip install awscli --upgrade
 ```
 ### Configure BlockChain Environment
 Configure BlockChain Fabric environment variables  
@@ -181,9 +181,18 @@ NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environm
        variables.  It uses the naming convention I specified in this HOW-TO.  So if you didn't
        use the naming convention it won't work.
        
-source configure-blockchain-environment
-```
+cd ~
+git clone https://github.com/kskalvar/aws-blockchain-fabric-quickstart.git  
 
+cp ~/aws-blockchain-fabric-quickstart/scripts/configure-blockchain-environment ~  
+chmod 777 ~/configure-blockchain-environment  
+
+cp ~/aws-blockchain-fabric-quickstart/scripts/build-blockchain-fabric-network ~  
+chmod 777 ~/build-blockchain-fabric-network  
+
+source configure-blockchain-environment
+./build-blockchain-fabric-network
+```
 ## Remove Your Amazon Managed Blockchain 
 
 ### AWS CloudFormation
@@ -197,13 +206,15 @@ Click on "Members" tab
 Locate "Members owned by you"    
 Select "KAL-Technology"  
 Click on "Delete member"  
-
+```
 Note: This will delete the peer node, the member, and finally, the Fabric network. Should take a couple of minutes to complete.
-
+```
 ### AWS EC2 Dashboard
+##### Remove blockchain-console instance
 Click on "Instances/Instances" on the left hand menu
 Delete "blockchain-console" Instance  
 
+#### Remove MyFabric-keypair
 Click on "Network & Security/Key Pairs" on the left hand menu  
 Select " MyFabric-keypair"  
 Click on "Delete"  
