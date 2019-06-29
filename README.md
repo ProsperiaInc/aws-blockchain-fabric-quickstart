@@ -6,10 +6,10 @@ Steps:
   Create Amazon Managed Hyperledger    
   Create Amazon Managed Hyperledger Fabric Peer  
   Create AWS EC2 Hyperledger Console Instance   
-  Create Amazon Managed Hyperledger Fabric Client Node    
-  Prepare the Amazon Managed Hyperledger Fabric Client Node and Enroll Identity  
-  Using the Amazon Managed Hyperledger Fabric EC2 Client Node  
-  Remove Your Amazon Managed Hyperledger    
+  Create AWS EC2 Hyperledger Fabric Client Node    
+  Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
+  Using the AWS EC2 Hyperledger Fabric Client Node  
+  Remove Your Amazon Managed Hyperledger Fabric Network    
 
 ## Create Amazon Managed Hyperledger 
 Use the AWS Console to configure the Amazon Managed Hyperledger.  This is a step by step process.
@@ -124,7 +124,7 @@ Test aws cli is configured properly by doing a simple test
 aws s3 ls
 ```
 
-## Create Amazon Managed Hyperledger Fabric EC2 Client Node
+## Create AWS EC2 Hyperledger Fabric Client Node
 Use the AWS Console to configure the Amazon Managed Hyperledger Fabric Client node.  This is a step by step process.  
 
 ### Connect to EC2 Hyperledger Console Instance
@@ -149,7 +149,7 @@ cd ~/non-profit-blockchain/ngo-fabric
 Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.  
 Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS of the EC2 instance 
 
-## Prepare the Amazon Managed Hyperledger Fabric EC2 Client Node and Enroll Identity
+## Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
 You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance".  
 ```
 cd ~
@@ -178,9 +178,10 @@ sudo pip install awscli --upgrade
 ### Configure BlockChain Environment and Build the Hyperledger Fabric Blockchain Network
 Configure BlockChain Fabric environment variables and build the Hyperledger Fabric blockchain network 
 ```
-NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environment" and "build-blockchain-fabric-network"  
-       You may run these script to automate the creation and population of environment 
-       variables as well as install a test Blockchain Fabric Netowrk.  It uses the naming convention I specified in this HOW-TO.
+NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environment" and 
+       "build-blockchain-fabric-network".  You may run these script to automate the
+       creation and population of environment variables as well as install a test Blockchain
+       Fabric Netowrk.  It uses the naming convention I specified in this HOW-TO.
        So if you didn't use my naming convention it won't work.
 ```
 Configure Blockchain Fabric Environment Variables
@@ -200,11 +201,20 @@ chmod 777 ~/build-blockchain-fabric-network
 
 ./build-blockchain-fabric-network
 ```
-## Using the Amazon Managed Hyperledger Fabric EC2 Client Node
-After the Hyperledger Fabric Network has been created you can log into the EC2 Client Node and perform operations on the Blockchain  
-Fabric Network.  This is a step by step process.
+## Using the AWS EC2 Hyperledger Fabric Client Node
+After the Hyperledger Fabric Network has been created you can log into the EC2 Client Node    
+at a later date and perform operations on the Blockchain Fabric Network.  This is a step by step process.  
 
-Set Blockchain Fabric Environment
+### Connect to EC2 Hyperledger Fabric Client
+You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance".  
+```
+cd ~
+ec2url=$(aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text)
+ssh -i MyFabric-keypair.pem ec2-user@$ec2url
+```
+
+### Set Blockchain Fabric Environment
+Set environment variables and query the network
 ```       
 source configure-blockchain-environment
 source /home/ec2-user/non-profit-blockchain/ngo-fabric/fabric-exports.sh
@@ -216,7 +226,7 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
 ```
 
 
-## Remove Your Amazon Managed Hyperledger 
+## Remove Your Amazon Managed Hyperledger Fabric Network 
 
 ### AWS CloudFormation
 Delete "MyFabric-fabric-client-node" Stack  
@@ -230,7 +240,8 @@ Locate "Members owned by you"
 Select "KAL-Technology"  
 Click on "Delete member"  
 ```
-Note: This will delete the peer node, the member, and finally, the Fabric network. Should take a couple of minutes to complete.
+Note: This will delete the peer node, the member, and finally, the Fabric network.
+Should take a couple of minutes to complete.
 ```
 ### AWS EC2 Dashboard
 ##### Remove blockchain-console instance
