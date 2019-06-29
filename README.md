@@ -8,7 +8,7 @@ Steps:
   Create AWS EC2 Hyperledger Console Instance   
   Create Amazon Managed Hyperledger Fabric Client Node    
   Prepare the Amazon Managed Hyperledger Fabric Client Node and Enroll Identity  
-  
+  Using the Amazon Managed Hyperledger Fabric EC2 Client Node  
   Remove Your Amazon Managed Hyperledger    
 
 ## Create Amazon Managed Hyperledger 
@@ -124,7 +124,7 @@ Test aws cli is configured properly by doing a simple test
 aws s3 ls
 ```
 
-## Create Amazon Managed Hyperledger Fabric Client Node
+## Create Amazon Managed Hyperledger Fabric EC2 Client Node
 Use the AWS Console to configure the Amazon Managed Hyperledger Fabric Client node.  This is a step by step process.  
 
 ### Connect to EC2 Hyperledger Console Instance
@@ -149,17 +149,21 @@ cd ~/non-profit-blockchain/ngo-fabric
 Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.  
 Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS of the EC2 instance 
 
-## Prepare the Amazon Managed Hyperledger Fabric Client Node and Enroll Identity
+## Prepare the Amazon Managed Hyperledger Fabric EC2 Client Node and Enroll Identity
 You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance".  
 ```
 cd ~
-ec2url=`aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text`
+ec2url=$(aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text)
 ssh -i MyFabric-keypair.pem ec2-user@$ec2url
 ```
 ### Configure AWS CLI
-You only need to set the region environment
+You only need to set the region environment  
+
+aws configure
 ```
-export AWS_DEFAULT_REGION=us-east-1
+AWS Access Key ID []: 
+AWS Secret Access Key []: 
+Default region name []: us-east-1
 ```
 ### Test aws cli
 Test aws cli is configured properly by doing a simple test
@@ -171,26 +175,47 @@ Upgrade the AWS Cli on the Fabric Client
 ```
 sudo pip install awscli --upgrade
 ```
-### Configure BlockChain Environment
-Configure BlockChain Fabric environment variables  
+### Configure BlockChain Environment and Build the Hyperledger Fabric Blockchain Network
+Configure BlockChain Fabric environment variables and build the Hyperledger Fabric blockchain network 
 ```
-NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environment".  
-       You may run this script to automate the creation and population of environment 
-       variables.  It uses the naming convention I specified in this HOW-TO.  So if you didn't
-       use my naming convention it won't work.
-       
+NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environment" and "build-blockchain-fabric-network"  
+       You may run these script to automate the creation and population of environment 
+       variables as well as install a test Blockchain Fabric Netowrk.  It uses the naming convention I specified in this HOW-TO.
+       So if you didn't use my naming convention it won't work.
+```
+Configure Blockchain Fabric Environment Variables
+```       
 cd ~
 git clone https://github.com/kskalvar/aws-blockchain-fabric-quickstart.git  
 
 cp ~/aws-blockchain-fabric-quickstart/scripts/configure-blockchain-environment ~  
 chmod 777 ~/configure-blockchain-environment  
 
+source configure-blockchain-environment
+```
+Build Blockchain Fabric Network
+```
 cp ~/aws-blockchain-fabric-quickstart/scripts/build-blockchain-fabric-network ~  
 chmod 777 ~/build-blockchain-fabric-network  
 
-source configure-blockchain-environment
 ./build-blockchain-fabric-network
 ```
+## Using the Amazon Managed Hyperledger Fabric EC2 Client Node
+After the Hyperledger Fabric Network has been created you can log into the EC2 Client Node and perform operations on the Blockchain  
+Fabric Network.  This is a step by step process.
+
+Set Blockchain Fabric Environment
+```       
+source configure-blockchain-environment
+source /home/ec2-user/non-profit-blockchain/ngo-fabric/fabric-exports.sh
+source /home/ec2-user/peer-exports.sh
+```
+Query the Blockchain Fabric Network
+```
+docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem"     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH"     cli peer chaincode query -C $CHANNEL -n $CHAINCODENAME -c '{"Args":["query","a"]}'
+```
+
+
 ## Remove Your Amazon Managed Hyperledger 
 
 ### AWS CloudFormation
