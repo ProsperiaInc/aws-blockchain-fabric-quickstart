@@ -64,7 +64,8 @@ Availability Zone: us-east-1a
 ```
 Click on "Create peer node"  
 ```
-Note: Should take a couple of minutes to complete.  Wait till you see "Available" appear in "Status" column under "Peer Nodes".
+Note: Should take a couple of minutes to complete.
+Wait till you see "Available" appear in "Status" column under "Peer Nodes".
 ```
 
 ## Create AWS EC2 Hyperledger Console Instance
@@ -125,7 +126,7 @@ aws s3 ls
 ```
 
 ## Create AWS EC2 Hyperledger Fabric Client Node
-Use the AWS Console to configure the Amazon Managed Hyperledger Fabric Client node.  This is a step by step process.  
+Use the EC2 Hyperledger Console Instance to configure the Amazon Managed Hyperledger Fabric Client node.  This is a step by step process.  
 
 ### Connect to EC2 Hyperledger Console Instance
 Using ssh from your local machine, connect to your AWS EC2 Instance tagged "hyperledger-fabric-console"  
@@ -134,10 +135,11 @@ Using ssh from your local machine, connect to your AWS EC2 Instance tagged "hype
 Configure BlockChain Fabric environment variables   
 ```
 NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environment".  
-       You may run this script to automate the creation and population of environment 
+       You may run this script to automate the creation and population of your environment 
        variables.  It uses the naming convention I specified in this HOW-TO.  So if you didn't
        use the my naming convention it won't work.
-       
+```
+```       
 source configure-blockchain-environment
 ```
 ### Run CloudFormation Script to Create Fabric Client Node
@@ -147,7 +149,7 @@ cd ~/non-profit-blockchain/ngo-fabric
 ./3-vpc-client-node.sh
 ```
 Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.  
-Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS of the EC2 instance 
+Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS 
 
 ## Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
 You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance".  
@@ -203,7 +205,8 @@ chmod 777 ~/build-blockchain-fabric-network
 ```
 ## Using the AWS EC2 Hyperledger Fabric Client Node
 After the Hyperledger Fabric Network has been created you can log into the EC2 Client Node    
-at a later date and perform operations on the Blockchain Fabric Network.  This is a step by step process.  
+at a later date and perform operations on the Blockchain Fabric Network.  In this example  
+we are logging in from the AWS EC2 Hyperledger Console Instance.  This is a step by step process.  
 
 ### Connect to EC2 Hyperledger Fabric Client
 You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance".  
