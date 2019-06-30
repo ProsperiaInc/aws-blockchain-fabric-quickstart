@@ -206,8 +206,7 @@ chmod 777 ~/build-blockchain-fabric-network
 ```
 ## Using the AWS EC2 Hyperledger Fabric Client Node
 After the Hyperledger Fabric Network has been created you can log into the AWS EC2 Hyperledger Client Node      
-at a later date and perform operations on the Blockchain Fabric Network.  In this example    
-we are logging in from the AWS EC2 Hyperledger Console Instance.  This is a step by step process.  
+at a later date and perform operations on the Blockchain Fabric Network.  This is a step by step process.  
 
 ### Connect to AWS EC2 Hyperledger Fabric Client
 You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance".  
