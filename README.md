@@ -59,7 +59,7 @@ Click on "Create peer node"
 
 Create peer node 
 ```
-Hyperledger instance type: bc.t3.small
+Blockchain instance type: bc.t3.small
 Availability Zone: us-east-1a
 ```
 Click on "Create peer node"  
@@ -152,7 +152,8 @@ Check the progress in the AWS CloudFormation console and wait until the stack is
 Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS 
 
 ## Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
-You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance".  
+You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance" from  
+your AWS EC2 Instance tagged "hyperledger-fabric-console.  
 ```
 cd ~
 ec2url=$(aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text)
@@ -204,11 +205,11 @@ chmod 777 ~/build-blockchain-fabric-network
 ./build-blockchain-fabric-network
 ```
 ## Using the AWS EC2 Hyperledger Fabric Client Node
-After the Hyperledger Fabric Network has been created you can log into the EC2 Client Node    
-at a later date and perform operations on the Blockchain Fabric Network.  In this example  
+After the Hyperledger Fabric Network has been created you can log into the AWS EC2 Hyperledger Client Node      
+at a later date and perform operations on the Blockchain Fabric Network.  In this example    
 we are logging in from the AWS EC2 Hyperledger Console Instance.  This is a step by step process.  
 
-### Connect to EC2 Hyperledger Fabric Client
+### Connect to AWS EC2 Hyperledger Fabric Client
 You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance".  
 ```
 cd ~
@@ -225,7 +226,11 @@ source /home/ec2-user/peer-exports.sh
 ```
 Query the Blockchain Fabric Network
 ```
-docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem"     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH"     cli peer chaincode query -C $CHANNEL -n $CHAINCODENAME -c '{"Args":["query","a"]}'
+docker exec -e "CORE_PEER_TLS_ENABLED=true" \
+            -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
+            -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" \
+            -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
+            cli peer chaincode query -C $CHANNEL -n $CHAINCODENAME -c '{"Args":["query","a"]}'
 ```
 
 
@@ -248,7 +253,7 @@ Should take a couple of minutes to complete.
 ```
 ### AWS EC2 Dashboard
 ##### Remove blockchain-console instance
-Click on "Instances/Instances" on the left hand menu
+Click on "Instances/Instances" on the left hand menu  
 Delete "hyperledger-fabric-console" Instance  
 
 #### Remove MyFabric-keypair
