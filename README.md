@@ -1,5 +1,5 @@
-AWS Managed Hyperledger QuickStart  
-===============================================
+AWS Managed Hyperledger Fabric QuickStart  
+=========================================
 This solution shows how to create an AWS Managed Hyperledger Fabric and deploy a sample application. This readme updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger" referenced below and provides a more basic step by step process.
 
 Steps:  
@@ -95,7 +95,7 @@ Click on "Next" Add Tags"
 Click on "Add Tag"
 ```
 Key: Name
-Value: blockchain-console
+Value: hyperledger-fabric-console
 ```
 Click on "Next: Configure Security Group"  
 Click on "Review and Launch"    
@@ -153,7 +153,8 @@ Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS
 
 ## Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
 You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance" from  
-your AWS EC2 Instance tagged "hyperledger-fabric-console.  
+your AWS EC2 Instance tagged "hyperledger-fabric-console.  You can use the aws cli to get the ec2url  
+to make it easier.
 ```
 cd ~
 ec2url=$(aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text)
@@ -164,9 +165,10 @@ You only need to set the region environment
 
 aws configure
 ```
-AWS Access Key ID []: 
-AWS Secret Access Key []: 
+AWS Access Key ID [None]: 
+AWS Secret Access Key [None]: 
 Default region name []: us-east-1
+Default output format [None]:
 ```
 ### Test aws cli
 Test aws cli is configured properly by doing a simple test
