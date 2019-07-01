@@ -1,11 +1,16 @@
 echo
 echo  Build Blockchain Fabric Network Part 1 
 echo  Step 4 - Prepare the Fabric client node and enroll an identity
-echo
 
+echo
+echo git clone https://github.com/aws-samples/non-profit-blockchain.git
+echo
 cd ~
 git clone https://github.com/aws-samples/non-profit-blockchain.git
 
+echo
+echo Update fabric-exports.sh
+echo
 cd ~/non-profit-blockchain/ngo-fabric
 cp ~/aws-blockchain-fabric-quickstart/scripts/fabric-exports.sh.txt fabric-exports.sh.txt
 
