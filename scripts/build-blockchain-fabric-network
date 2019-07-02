@@ -1,16 +1,16 @@
 echo
-echo  Build Blockchain Fabric Network Part 1 
-echo  Step 4 - Prepare the Fabric client node and enroll an identity
+echo "Build Blockchain Fabric Network Part 1" 
+echo "Step 4 - Prepare the Fabric client node and enroll an identity"
 echo
 
 echo
-echo git clone https://github.com/aws-samples/non-profit-blockchain.git
+echo "git clone https://github.com/aws-samples/non-profit-blockchain.git"
 echo
 cd ~
 git clone https://github.com/aws-samples/non-profit-blockchain.git
 
 echo
-echo Update and source fabric-exports.sh
+echo "Update and source fabric-exports.sh"
 echo
 cd ~/non-profit-blockchain/ngo-fabric
 cp ~/aws-blockchain-fabric-quickstart/scripts/fabric-exports.sh.txt fabric-exports.sh.txt
@@ -28,7 +28,7 @@ echo $PEERSERVICEENDPOINT
 sleep 10
 
 echo
-echo Check the peer export file exists and that it contains a number of export keys with values:
+echo "Check the peer export file exists and that it contains a number of export keys with values:"
 echo
 
 cat ~/peer-exports.sh 
@@ -36,14 +36,14 @@ source ~/peer-exports.sh
 sleep 10
 
 echo 
-echo Get the latest version of the Managed Blockchain PEM file.
+echo "Get the latest version of the Managed Blockchain PEM file."
 echo 
 
 aws s3 cp s3://us-east-1.managedblockchain/etc/managedblockchain-tls-chain.pem  /home/ec2-user/managedblockchain-tls-chain.pem  
 sleep 10
 
 echo 
-echo Enroll an admin identity with the Fabric CA
+echo "Enroll an admin identity with the Fabric CA"
 echo 
 
 export PATH=$PATH:/home/ec2-user/go/src/github.com/hyperledger/fabric-ca/bin
@@ -52,7 +52,7 @@ fabric-ca-client enroll -u https://$ADMINUSER:$ADMINPWD@$CASERVICEENDPOINT --tls
 sleep 10 
 
 echo
-echo Some final copying of the certificates is necessary:
+echo "Some final copying of the certificates is necessary:"
 echo
 
 mkdir -p /home/ec2-user/admin-msp/admincerts
@@ -61,17 +61,14 @@ cd ~/non-profit-blockchain/ngo-fabric
 sleep 10
 
 echo
-echo  Step 5 - Update the configtx channel configuration
-echo
-
-echo
-echo Obtain member ID from ENV variables exported to your current session.
+echo "Step 5 - Update the configtx channel configuration"
+echo "Obtain member ID from ENV variables exported to your current session."
 echo 
 
 echo $MEMBERID
 
 echo 
-echo Update the configtx.yaml file
+echo "Update the configtx.yaml file"
 echo
 
 cp ~/non-profit-blockchain/ngo-fabric/configtx.yaml ~/configtx.yaml.txt
@@ -79,7 +76,8 @@ sed "s|<REPLACE WITH MEMBER_ID>|${MEMBERID}|" ~/configtx.yaml.txt > ~/configtx.y
 sleep 10
 
 echo
-echo Generate the configtx channel configuration by executing the following script. When the channel is created, this channel configuration will become the genesis block i.e. block 0 on the channel
+echo "Generate the configtx channel configuration by executing the following script. When the channel is created, this channel configuration will become the genesis"
+echo "block i.e. block 0 on the channel"
 echo
 
 docker exec cli configtxgen -outputCreateChannelTx /opt/home/$CHANNEL.pb -profile OneOrgChannel -channelID $CHANNEL --configPath /opt/home/
@@ -87,11 +85,8 @@ ls -lt ~/$CHANNEL.pb
 sleep 10
 
 echo
-echo  Step 6 - Create a Fabric channel
-echo 
-
-echo 
-echo Create a Fabric channel
+echo "Step 6 - Create a Fabric channel"
+echo "Create a Fabric channel"
 echo
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
@@ -101,7 +96,8 @@ ls -lt /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
 sleep 10 
 
 echo
-echo If the channel creation times out, it's possible that the channel has still been created and you can get the block from the channel itself. Executing the command below will read the channel config and save the genesis block in the same directory as mentioned above
+echo "If the channel creation times out, it's possible that the channel has still been created and you can get the block from the channel itself."
+echo "Executing the command below will read the channel config and save the genesis block in the same directory as mentioned above"
 echo
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
@@ -112,7 +108,7 @@ ls -lt /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
 sleep 10
 
 echo
-echo  Step 7 - Join your peer node to the channel
+echo "Step 7 - Join your peer node to the channel"
 echo 
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
@@ -121,7 +117,7 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
 sleep 10
 
 echo
-echo  Step 8 - Install chaincode on your peer node
+echo "Step 8 - Install chaincode on your peer node"
 echo
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
@@ -130,7 +126,7 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
 sleep 10
 
 echo
-echo  Step 9 - Instantiate the chaincode on the channel
+echo "Step 9 - Instantiate the chaincode on the channel"
 echo 
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
@@ -140,7 +136,7 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
 sleep 10
 
 echo
-echo  Step 10 - Query the chaincode
+echo "Step 10 - Query the chaincode"
 echo 
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
@@ -149,7 +145,7 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
 sleep 10
 
 echo
-echo  Step 11 - Invoke a transaction
+echo "Step 11 - Invoke a transaction"
 echo 
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
@@ -159,7 +155,7 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
 sleep 10
 
 echo
-echo  Step 12 - Query the chaincode again and check the change in value
+echo "Step 12 - Query the chaincode again and check the change in value"
 echo 
 
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \

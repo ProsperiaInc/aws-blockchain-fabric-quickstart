@@ -24,7 +24,7 @@ export NETWORKID=<your network ID, from the AWS Console>
 export MEMBERID=<your member ID, from the AWS Console>
 
 # No need to change anything below here
-echo Updating AWS CLI to the latest version
+# echo Updating AWS CLI to the latest version
 # sudo pip install awscli --upgrade
 cd ~
 
@@ -73,7 +73,3 @@ export CHAINCODENAME=mycc
 export CHAINCODEVERSION=v0
 export CHAINCODEDIR=github.com/chaincode_example02/go
 EOF
-
-                                     
-
-
