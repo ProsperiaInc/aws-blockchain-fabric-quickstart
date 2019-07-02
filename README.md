@@ -3,13 +3,13 @@ AWS Managed Hyperledger Fabric QuickStart
 This solution shows how to create an AWS Managed Hyperledger Fabric and deploy a sample application. This readme updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger" referenced below and provides a more basic step by step process.
 
 Steps:  
-  Create Amazon Managed Hyperledger    
-  Create Amazon Managed Hyperledger Fabric Peer  
-  Create AWS EC2 Hyperledger Console Instance   
-  Create AWS EC2 Hyperledger Fabric Client Node    
-  Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
-  Using the AWS EC2 Hyperledger Fabric Client Node  
-  Remove Your Amazon Managed Hyperledger Fabric Network    
+* Create Amazon Managed Hyperledger    
+* Create Amazon Managed Hyperledger Fabric Peer  
+* Create AWS EC2 Hyperledger Console Instance   
+* Create AWS EC2 Hyperledger Fabric Client Node    
+* Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
+* Using the AWS EC2 Hyperledger Fabric Client Node  
+* Remove Your Amazon Managed Hyperledger Fabric Network    
 
 ## Create Amazon Managed Hyperledger 
 Use the AWS Console to configure the Amazon Managed Hyperledger.  This is a step by step process.
