@@ -125,8 +125,8 @@ Test aws cli is configured properly by doing a simple test
 aws s3 ls
 ```
 
-## Create AWS EC2 Hyperledger Fabric Client Node
-Use the EC2 Hyperledger Console Instance to configure the Amazon Managed Hyperledger Fabric Client node.  This is a step by step process.  
+## Create AWS EC2 Hyperledger Fabric Peer Node
+Use the EC2 Hyperledger Console Instance to create the Amazon Managed Hyperledger Fabric Peer Node.  This is a step by step process.  
 
 ### Connect to EC2 Hyperledger Console Instance
 Using ssh from your local machine, connect to your AWS EC2 Instance tagged "hyperledger-fabric-console"  
@@ -142,7 +142,7 @@ NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environm
 ```       
 source configure-blockchain-environment
 ```
-### Run CloudFormation Script to Create Fabric Client Node
+### Run CloudFormation Script to Create Fabric Peer Node
 Launches a AWS CloudFormation script to create the Fabric Client Node
 ```
 cd ~/non-profit-blockchain/ngo-fabric
