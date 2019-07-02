@@ -143,7 +143,7 @@ NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environm
 source configure-blockchain-environment
 ```
 ### Run CloudFormation Script to Create Fabric Peer Node
-Launches a AWS CloudFormation script to create the Fabric Client Node
+Launches a AWS CloudFormation script to create the Fabric Peer Node
 ```
 cd ~/non-profit-blockchain/ngo-fabric
 ./3-vpc-client-node.sh
@@ -151,7 +151,7 @@ cd ~/non-profit-blockchain/ngo-fabric
 Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.  
 Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS 
 
-## Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
+## Prepare AWS EC2 Hyperledger Fabric Peer Node and Enroll Identity  
 You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance" from  
 your AWS EC2 Instance tagged "hyperledger-fabric-console.  You can use the aws cli to get the ec2url  
 to make it easier.
