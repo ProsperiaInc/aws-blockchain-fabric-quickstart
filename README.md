@@ -33,7 +33,7 @@ Click on "Next"
 
 Member configuration
 ```
-Member name: KAL-Technology
+Member name: KALTechnology
 ```
 Hyperledger Fabric certificate authority (CA) configuration  
 ```
@@ -54,7 +54,7 @@ Click on "MyFabric"
 Click on "Members" tab 
  
 Locate "Members owned by you"  
-Select "KAL-Technology"  
+Select "KALTechnology"  
 Click on "Create peer node"    
 
 Create peer node 
@@ -110,7 +110,7 @@ ssh -i <AWS EC2 Private Key> ec2-user@<AWS EC2 Instance IP Address>
 ```
 
 ### Check to insure cloud-init has completed
-See contents of "/tmp/install-eks-support" it should say "installation complete".
+See contents of "/tmp/install-blockchain-support" it should say "installation complete".
 
 ### Configure AWS CLI
 aws configure
@@ -233,8 +233,6 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" \
             -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
             cli peer chaincode query -C $CHANNEL -n $CHAINCODENAME -c '{"Args":["query","a"]}'
 ```
-
-
 ## Remove Your Amazon Managed Hyperledger Fabric Network 
 
 ### AWS CloudFormation
@@ -246,7 +244,7 @@ Click on "MyFabric"
 Click on "Members" tab  
 
 Locate "Members owned by you"    
-Select "KAL-Technology"  
+Select "KALTechnology"  
 Click on "Delete member"  
 ```
 Note: This will delete the peer node, the member, and finally, the Fabric network.
