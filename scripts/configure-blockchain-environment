@@ -13,7 +13,7 @@ membername=$(aws managedblockchain list-members --network-id $networkid --query 
 memberid=$(aws managedblockchain list-members --network-id $networkid --query 'Members[0].Id' --output text)
 networkversion=$(aws managedblockchain list-networks  --query 'Networks[0].FrameworkVersion' --output text)
 vpcendpointservicename=$(aws managedblockchain get-network --region $region --network-id $networkid \
-                       --query 'Network.VpcEndpointServiceName' --output text)
+                                                           --query 'Network.VpcEndpointServiceName' --output text)
 
 export REGION=$region
 export NETWORKID=$networkid
