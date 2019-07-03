@@ -4,14 +4,16 @@ echo "Step 4 - Prepare the Fabric client node and enroll an identity"
 echo
 
 echo
-echo "Get the latest non-profit-blockchain repo"
+echo "Step 4a - Get the latest non-profit-blockchain repo"
 echo
+
 cd ~
 git clone https://github.com/aws-samples/non-profit-blockchain.git
 
 echo
-echo "Update and source fabric-exports.sh"
+echo "Step 4b - Update and source the fabric-exports.sh"
 echo
+
 cd ~/non-profit-blockchain/ngo-fabric
 cp ~/aws-blockchain-fabric-quickstart/scripts/fabric-exports.sh.txt fabric-exports.sh.txt
 
@@ -28,7 +30,7 @@ echo $PEERSERVICEENDPOINT
 sleep 25
 
 echo
-echo "Check the peer export file exists and that it contains a number of export keys with values:"
+echo "Step 4c - Check the peer export file exists and that it contains a number of export keys with values:"
 echo
 
 cat ~/peer-exports.sh 
@@ -36,14 +38,14 @@ source ~/peer-exports.sh
 sleep 25
 
 echo 
-echo "Get the latest version of the Managed Blockchain PEM file."
+echo "Step 4d - Get the latest version of the Managed Blockchain PEM file."
 echo 
 
 aws s3 cp s3://us-east-1.managedblockchain/etc/managedblockchain-tls-chain.pem  /home/ec2-user/managedblockchain-tls-chain.pem  
 sleep 25
 
 echo 
-echo "Enroll an admin identity with the Fabric CA"
+echo "Step 4e - Enroll an admin identity with the Fabric CA"
 echo 
 
 export PATH=$PATH:/home/ec2-user/go/src/github.com/hyperledger/fabric-ca/bin
@@ -52,7 +54,7 @@ fabric-ca-client enroll -u https://$ADMINUSER:$ADMINPWD@$CASERVICEENDPOINT --tls
 sleep 25 
 
 echo
-echo "Some final copying of the certificates is necessary:"
+echo "Step 4f - Some final copying of the certificates is necessary:"
 echo
 
 mkdir -p /home/ec2-user/admin-msp/admincerts
@@ -68,7 +70,7 @@ echo
 echo $MEMBERID
 
 echo 
-echo "Update the configtx.yaml file"
+echo "Step 5a - Update the configtx.yaml file"
 echo
 
 cp ~/non-profit-blockchain/ngo-fabric/configtx.yaml ~/configtx.yaml.txt
@@ -76,12 +78,12 @@ sed "s|<REPLACE WITH MEMBER_ID>|${MEMBERID}|" ~/configtx.yaml.txt > ~/configtx.y
 sleep 25
 
 echo
-echo "Generate the configtx channel configuration by executing the following script. When the channel is created, this channel configuration will become the genesis"
-echo "block i.e. block 0 on the channel"
+echo "Step 5b - Generate the configtx channel configuration by executing the following script. When the channel is created,"
+echo "this channel configuration will become the genesis block i.e. block 0 on the channel"
 echo
 
 docker exec cli configtxgen -outputCreateChannelTx /opt/home/$CHANNEL.pb -profile OneOrgChannel -channelID $CHANNEL --configPath /opt/home/
-ls -lt ~/$CHANNEL.pb 
+ls ~/$CHANNEL.pb 
 sleep 25
 
 echo
@@ -96,7 +98,9 @@ ls -lt /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
 sleep 25 
 
 echo
-echo "If the channel creation times out, it's possible that the channel has still been created and you can get the block from the channel itself."
+echo "Step 6a - If the channel creation times out, it's possible that the channel has still been created and you can get the block"
+echo "from the channel itself."
+echo
 echo "Executing the command below will read the channel config and save the genesis block in the same directory as mentioned above"
 echo
 
@@ -104,7 +108,7 @@ docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt
     -e "CORE_PEER_ADDRESS=$PEER"  -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer channel fetch oldest /opt/home/fabric-samples/chaincode/hyperledger/fabric/peer/$CHANNEL.block \
     -c $CHANNEL -o $ORDERER --cafile /opt/home/managedblockchain-tls-chain.pem --tls   
-ls -lt /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
+ls /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
 sleep 25
 
 echo
