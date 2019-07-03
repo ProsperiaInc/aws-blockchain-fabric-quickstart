@@ -64,7 +64,7 @@ Availability Zone: us-east-1a
 ```
 Click on "Create peer node"  
 ```
-Note: Should take a couple of minutes to complete.
+Note: Should take about 2 minutes to complete.
 Wait till you see "Available" appear in "Status" column under "Peer Nodes".
 ```
 
