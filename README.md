@@ -142,8 +142,8 @@ NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environm
 ```       
 source configure-blockchain-environment
 ```
-### Run CloudFormation Script to Create Fabric Peer Node
-Launches a AWS CloudFormation script to create the Fabric Peer Node
+### Run CloudFormation Script to Create Fabric Client Node
+Launches a AWS CloudFormation script to create the Fabric Client Node
 ```
 cd ~/non-profit-blockchain/ngo-fabric
 ./3-vpc-client-node.sh
