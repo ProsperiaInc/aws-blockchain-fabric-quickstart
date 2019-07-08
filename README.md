@@ -3,7 +3,7 @@ AWS Managed Hyperledger Fabric QuickStart
 This solution shows how to create an AWS Managed Hyperledger Fabric and deploy a sample application. This readme updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger" referenced below and provides a more basic step by step process.
 
 
-![Alt text](images/AWS-Managed-Blockchain.PNG?raw=true "Title")
+![AWS Managed Hyperledger Fabric](images/AWS-Managed-Blockchain.PNG?raw=true "AWS Managed Hyperledger Fabric")
 
 
 Steps:  
@@ -11,7 +11,7 @@ Steps:
 * [Create Amazon Managed Hyperledger Fabric Peer Node](#create-amazon-managed-hyperledger-fabric-peer-node)  
 * [Create AWS EC2 Hyperledger Console Instance](#create-aws-ec2-hyperledger-console-instance)  
 * [Create AWS EC2 Hyperledger Fabric Client Node](#create-aws-ec2-hyperledger-fabric-client-node)  
-* [Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity](#prepare-aws-ec2-hyperledger-fabric-client-node-and-enroll-identity)  
+* [Configure AWS EC2 Hyperledger Fabric Client Node and Enroll Identity](#configure-aws-ec2-hyperledger-fabric-client-node-and-enroll-identity)  
 * [Using the AWS EC2 Hyperledger Fabric Client Node](#using-the-aws-ec2-hyperledger-fabric-client-node)  
 * [Remove Your Amazon Managed Hyperledger Fabric Network](#remove-your-amazon-managed-hyperledger-fabric-network)  
 
@@ -155,7 +155,7 @@ cd ~/non-profit-blockchain/ngo-fabric
 Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.  
 Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS 
 
-## Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
+## Configure AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
 You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance" from  
 your AWS EC2 Instance tagged "hyperledger-fabric-console.  You can use the aws cli to get the ec2url  
 to make it easier.
@@ -169,10 +169,10 @@ You only need to set the region environment
 
 aws configure
 ```
-AWS Access Key ID [None]: 
-AWS Secret Access Key [None]: 
-Default region name []: us-east-1
-Default output format [None]:
+AWS Access Key ID [None] :
+AWS Secret Access Key [None] :
+Default region name [] us-east-1
+Default output format [None] :
 ```
 ### Test aws cli
 Test aws cli is configured properly by doing a simple test
@@ -271,3 +271,10 @@ https://github.com/aws-samples/non-profit-blockchain
 
 Amazon Managed Blockchain How to build an application with Amazon Managed Blockchain
 Michael Edge edgema@amazon.com Sr. Blockchain Architect AWS Professional Services
+
+Hyperledger Fabric Samples  
+https://github.com/hyperledger/fabric-samples  
+
+
+
+
