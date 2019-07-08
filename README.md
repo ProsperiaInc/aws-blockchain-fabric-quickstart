@@ -45,8 +45,8 @@ Click on "Create network and member"
 ```
 Note: Should take about 20 minutes to complete.  Wait till you see "Available" appear in "Status" column.  
 ```
-## Create Amazon Managed Hyperledger Fabric Peer
-Use the AWS Console to configure the Amazon Managed Hyperledger Fabric Peer.  This is a step by step process.
+## Create Amazon Managed Hyperledger Fabric Peer Node
+Use the AWS Console to configure the Amazon Managed Hyperledger Fabric Peer Node.  This is a step by step process.
 
 ### Amazon Managed Hyperledger Dashboard
 Click on "Networks"  
