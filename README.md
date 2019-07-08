@@ -2,6 +2,10 @@ AWS Managed Hyperledger Fabric QuickStart
 =========================================
 This solution shows how to create an AWS Managed Hyperledger Fabric and deploy a sample application. This readme updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger" referenced below and provides a more basic step by step process.
 
+
+![Alt text](images/AWS-Managed-Blockchain.PNG?raw=true "Title")
+
+
 Steps:  
 * [Create Amazon Managed Hyperledger](#create-amazon-managed-hyperledger)  
 * [Create Amazon Managed Hyperledger Fabric Peer Node](#create-amazon-managed-hyperledger-fabric-peer-node)  
@@ -263,4 +267,7 @@ Click on "Delete"
 ## References
 
 Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger  
-https://github.com/aws-samples/non-profit-blockchain
+https://github.com/aws-samples/non-profit-blockchain  
+
+Amazon Managed Blockchain How to build an application with Amazon Managed Blockchain
+Michael Edge edgema@amazon.com Sr. Blockchain Architect AWS Professional Services
