@@ -6,7 +6,7 @@ Steps:
 * [Create Amazon Managed Hyperledger](#create-amazon-managed-hyperledger)  
 * [Create Amazon Managed Hyperledger Fabric Peer Node](#create-amazon-managed-hyperledger-fabric-peer-node)  
 * [Create AWS EC2 Hyperledger Console Instance](#create-aws-ec2-hyperledger-console-instance)  
-* [Create AWS EC2 Hyperledger Fabric Peer Node](#create-aws-ec2-hyperledger-fabric-peer-node)  
+* [Create AWS EC2 Hyperledger Fabric Client Node]()  
 * [Prepare AWS EC2 Hyperledger Fabric Client Node and Enroll Identity](#prepare-aws-ec2-hyperledger-fabric-peer-node-and-enroll-identity)  
 * [Using the AWS EC2 Hyperledger Fabric Client Node](#using-the-aws-ec2-hyperledger-fabric-client-node)  
 * [Remove Your Amazon Managed Hyperledger Fabric Network](#remove-your-amazon-managed-hyperledger-fabric-network)  
@@ -125,8 +125,8 @@ Test aws cli is configured properly by doing a simple test
 aws s3 ls
 ```
 
-## Create AWS EC2 Hyperledger Fabric Peer Node
-Use the EC2 Hyperledger Console Instance to create the Amazon Managed Hyperledger Fabric Peer Node.  This is a step by step process.  
+## Create AWS EC2 Hyperledger Fabric Client Node
+Use the EC2 Hyperledger Console Instance to create the Amazon Managed Hyperledger Fabric Client Node.  This is a step by step process.  
 
 ### Connect to EC2 Hyperledger Console Instance
 Using ssh from your local machine, connect to your AWS EC2 Instance tagged "hyperledger-fabric-console"  
