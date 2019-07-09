@@ -11,7 +11,7 @@ Steps:
 * [Create Amazon Managed Hyperledger Fabric Peer Node](#create-amazon-managed-hyperledger-fabric-peer-node)  
 * [Create AWS EC2 Hyperledger Console Instance](#create-aws-ec2-hyperledger-console-instance)  
 * [Create AWS EC2 Hyperledger Fabric Client Node](#create-aws-ec2-hyperledger-fabric-client-node)  
-* [Configure AWS EC2 Hyperledger Fabric Client Node and Enroll Identity](#configure-aws-ec2-hyperledger-fabric-client-node-and-enroll-identity)  
+* [Configure AWS EC2 Hyperledger Fabric Client Node and Enroll Identity](#configure-aws-ec2-hyperledger-fabric-client-node-and-build-blockchain-network)  
 * [Using the AWS EC2 Hyperledger Fabric Client Node](#using-the-aws-ec2-hyperledger-fabric-client-node)  
 * [Remove Your Amazon Managed Hyperledger Fabric Network](#remove-your-amazon-managed-hyperledger-fabric-network)  
 
@@ -130,7 +130,7 @@ aws s3 ls
 ```
 
 ## Create AWS EC2 Hyperledger Fabric Client Node
-Use the EC2 Hyperledger Console Instance to create the Amazon Managed Hyperledger Fabric Client Node.  This is a step by step process.  
+Use the EC2 Hyperledger Console Instance to create the AWS EC2 Hyperledger Fabric Client Node.  This is a step by step process.  
 
 ### Connect to EC2 Hyperledger Console Instance
 Using ssh from your local machine, connect to your AWS EC2 Instance tagged "hyperledger-fabric-console"  
@@ -155,10 +155,9 @@ cd ~/non-profit-blockchain/ngo-fabric
 Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.  
 Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS 
 
-## Configure AWS EC2 Hyperledger Fabric Client Node and Enroll Identity  
-You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopEC2ClientInstance" from  
-your AWS EC2 Instance tagged "hyperledger-fabric-console.  You can use the aws cli to get the ec2url  
-to make it easier.
+## Configure AWS EC2 Hyperledger Fabric Client Node and Build Blockchain Network  
+You'll need to ssh into the AWS EC2 Hyperledger Fabric Client Node.  You can use the aws cli  
+to get the ec2url to make it easier.
 ```
 cd ~
 ec2url=$(aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text)
@@ -203,7 +202,8 @@ chmod 777 ~/configure-blockchain-environment
 
 source configure-blockchain-environment
 ```
-Build Blockchain Fabric Network
+Build Blockchain Fabric Network.  This will not only install the sample test chaincode but run  
+test against the chaincode and network as well.  If all goes well your network will be up and running.    
 ```
 cp ~/aws-blockchain-fabric-quickstart/scripts/build-blockchain-fabric-network ~  
 chmod 777 ~/build-blockchain-fabric-network  
@@ -229,7 +229,8 @@ source configure-blockchain-environment
 source /home/ec2-user/non-profit-blockchain/ngo-fabric/fabric-exports.sh
 source /home/ec2-user/peer-exports.sh
 ```
-Query the Blockchain Fabric Network
+### Query the Blockchain Fabric Network
+Query the Fabric Network to see if you are configured properly
 ```
 docker exec -e "CORE_PEER_TLS_ENABLED=true" \
             -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
