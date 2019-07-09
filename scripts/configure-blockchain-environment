@@ -2,10 +2,14 @@
 # Use at your own risk. But if you followed the installation instructions to the letter it
 # should make the config process fast.
 
-# This will use aws cli to populate environment variables with the correct values
+# These values are hardcoded for now and must match what you used to create the Hyperledger Fabric
+# from the AWS Console
+
 region=us-east-1
 adminuser=admin
 adminpwd=Administration01
+
+# This will use aws cli to populate environment variables with the correct values
 
 networkid=$(aws managedblockchain list-networks --query 'Networks[0].Id' --output text)
 networkname=$(aws managedblockchain list-networks --query 'Networks[0].Name' --output text)
