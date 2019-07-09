@@ -90,6 +90,10 @@ echo
 echo "Step 6 - Create a Fabric channel"
 echo
 
+echo
+echo "Step 6a - On the Fabric client node.  Create a Fabric channel.  Execute the following script:"
+echo
+
 docker exec -e "CORE_PEER_TLS_ENABLED=true" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/home/managedblockchain-tls-chain.pem" \
     -e "CORE_PEER_ADDRESS=$PEER" -e "CORE_PEER_LOCALMSPID=$MSP" -e "CORE_PEER_MSPCONFIGPATH=$MSP_PATH" \
     cli peer channel create -c $CHANNEL -f /opt/home/$CHANNEL.pb -o $ORDERER --cafile $CAFILE --tls --timeout 900s
@@ -97,7 +101,7 @@ ls /home/ec2-user/fabric-samples/chaincode/hyperledger/fabric/peer
 echo;sleep 25 
 
 echo
-echo "Step 6a - If the channel creation times out, it's possible that the channel has still been created and you can get the block"
+echo "Step 6b - If the channel creation times out, it's possible that the channel has still been created and you can get the block"
 echo "from the channel itself.  Executing the command below will read the channel config and save the genesis block in the same"
 echo "directory as mentioned above"
 echo
