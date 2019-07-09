@@ -269,8 +269,8 @@ Building and deploying an application for Hyperledger Fabric on Amazon Managed H
 https://github.com/aws-samples/non-profit-blockchain  
 
 Amazon Managed Blockchain How to build an application with Amazon Managed Blockchain
-Michael Edge edgema@amazon.com Sr.  
-Blockchain Architect  
+Michael Edge edgema@amazon.com  
+Sr. Blockchain Architect  
 AWS Professional Services
 
 Hyperledger Fabric Samples  
