@@ -155,7 +155,7 @@ Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS
 
 ## Configure AWS EC2 Hyperledger Fabric Client Node and Build Blockchain Network  
 You'll need to ssh into the AWS EC2 Hyperledger Fabric Client Node.  You can use the aws cli  
-to get the ec2url to make it easier.
+to get the ec2url to make it easier or you can just use "EC2URL Public DNS" you copied from the step above.
 ```
 cd ~
 ec2url=$(aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text)
@@ -185,12 +185,13 @@ sudo pip install awscli --upgrade
 Configure BlockChain Fabric environment variables and build the Hyperledger Fabric blockchain network 
 ```
 NOTE:  There is a script in /home/ec2-user called "configure-blockchain-environment" and 
-       "build-blockchain-fabric-network".  You may run these script to automate the
+       "build-blockchain-fabric-network".  You may run these scripts to automate the
        creation and population of environment variables as well as install a test Blockchain
-       Fabric Netowrk.  It uses the naming convention I specified in this HOW-TO.
-       So if you didn't use my naming convention it won't work.
+       chaincode.  It uses the naming convention I specified in this HOW-TO.  So if you didn't
+       use my naming convention it won't work.
 ```
-Configure Blockchain Fabric Environment Variables
+#### Configure Blockchain Fabric Environment Variables
+Set the environment variables
 ```       
 cd ~
 git clone https://github.com/kskalvar/aws-blockchain-fabric-quickstart.git  
@@ -200,8 +201,9 @@ chmod 777 ~/configure-blockchain-environment
 
 source configure-blockchain-environment
 ```
-Build Blockchain Fabric Network.  This will not only install the sample test chaincode but run  
-test against the chaincode and network as well.  If all goes well your network will be up and running.    
+#### Build Blockchain Fabric Network.
+This will not only install the sample test chaincode but run test against the chaincode and network as well.  
+If all goes well your network will be up and running.    
 ```
 cp ~/aws-blockchain-fabric-quickstart/scripts/build-blockchain-fabric-network ~  
 chmod 777 ~/build-blockchain-fabric-network  
