@@ -223,7 +223,7 @@ ssh -i MyFabric-keypair.pem ec2-user@$ec2url
 ```
 
 ### Set Blockchain Fabric Environment
-Set environment variables and query the network
+Set environment variables
 ```       
 source configure-blockchain-environment
 source /home/ec2-user/non-profit-blockchain/ngo-fabric/fabric-exports.sh
