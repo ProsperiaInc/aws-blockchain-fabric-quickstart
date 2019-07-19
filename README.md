@@ -1,6 +1,6 @@
 AWS Managed Hyperledger Fabric QuickStart  
 =========================================
-This solution shows how to create an AWS Managed Hyperledger Fabric and deploy a sample application. This readme updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger" referenced below and provides a more basic step by step process.
+This solution shows how to create an AWS Managed Hyperledger Fabric and deploy sample chaincode. This readme updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger" referenced below and provides a more basic step by step process.
 
 ![AWS Managed Hyperledger Fabric](images/AWS-Managed-Blockchain.PNG?raw=true "AWS Managed Hyperledger Fabric")
 
@@ -256,7 +256,7 @@ Note: This will delete the peer node, the member, and finally, the Fabric networ
 Should take a couple of minutes to complete.
 ```
 ### AWS EC2 Dashboard
-##### Remove blockchain-console instance
+#### Remove blockchain-console instance
 Click on "Instances/Instances" on the left hand menu  
 Delete "hyperledger-fabric-console" Instance  
 
