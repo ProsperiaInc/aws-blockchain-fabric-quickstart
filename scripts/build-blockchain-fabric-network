@@ -1,6 +1,10 @@
 #  We're just putting all the manual steps in a script for ease of use.  The sleep is kind of long but needed
 #  to be sure each step finished before the next.
 
+# cleanup if previous attempt failed!
+cd ~
+rm -rf non-profit-blockchain
+
 echo
 echo "Build Blockchain Fabric Network Part 1" 
 echo "Step 4 - Prepare the Fabric client node and enroll an identity"
