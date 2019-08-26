@@ -35,7 +35,7 @@ Click on "Next"
 
 Member configuration
 ```
-Member name: KALTechnology
+Member name: KAL-Technology
 ```
 Hyperledger Fabric certificate authority (CA) configuration  
 ```
@@ -56,7 +56,7 @@ Click on "MyFabric"
 Click on "Members" tab 
  
 Locate "Members owned by you"  
-Select "KALTechnology"  
+Select "KAL-Technology"  
 Click on "Create peer node"    
 
 Create peer node 
@@ -77,7 +77,7 @@ Use AWS Console to configure the an EC2 Instance for blockchain fabric console. 
 Click on "Launch Instance"  
 Click on "Quick Start"  
 ```
-Amazon Linux 2 AMI (HVM), SSD Volume Type - ami-0cc96feef8c6bbff3 
+Amazon Linux 2 AMI (HVM), SSD Volume Type 
 ```  
 Click on "Select"
 
@@ -150,12 +150,13 @@ Launches a AWS CloudFormation script to create the Fabric Client Node
 cd ~/non-profit-blockchain/ngo-fabric
 ./3-vpc-client-node.sh
 ```
-Check the progress in the AWS CloudFormation console and wait until the stack is CREATE COMPLETE.  
+Check the progress in the AWS CloudFormation console and wait until stack CREATE COMPLETE.  
 Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS 
 
 ## Configure AWS EC2 Hyperledger Fabric Client Node and Build Blockchain Network  
-You'll need to ssh into the AWS EC2 Hyperledger Fabric Client Node.  You can use the aws cli  
-to get the ec2url to make it easier or you can just use "EC2URL Public DNS" you copied from the step above.
+You'll need to ssh into the AWS EC2 Hyperledger Fabric Client Node from your hyperledger-fabric-console.
+You can use the aws cli to get the ec2url to make it easier or you can just use "EC2URL Public DNS"
+you copied from the step above.
 ```
 cd ~
 ec2url=$(aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text)
@@ -249,7 +250,7 @@ Click on "MyFabric"
 Click on "Members" tab  
 
 Locate "Members owned by you"    
-Select "KALTechnology"  
+Select "KAL-Technology"  
 Click on "Delete member"  
 ```
 Note: This will delete the peer node, the member, and finally, the Fabric network.
