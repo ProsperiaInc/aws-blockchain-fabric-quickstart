@@ -18,6 +18,11 @@ write_files:
         
         echo "upgrade awscli" >> /tmp/install-blockchain-support
         pip install awscli --upgrade
+        
+        echo "install docker" >> /tmp/install-blockchain-support
+        yum install -y docker
+        service docker start
+        usermod -a -G docker ec2-user
  
         echo "git clone aws-blockchain-fabric-quickstart.git" >> /tmp/install-blockchain-support
         runuser -l ec2-user -c 'git clone https://github.com/kskalvar/aws-blockchain-fabric-quickstart.git'
