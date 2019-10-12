@@ -220,7 +220,7 @@ You'll need to ssh into the the EC2 instance tagged "ManagedHyperledgerWorkshopE
 ```
 cd ~
 ec2url=$(aws cloudformation describe-stacks --query Stacks[].Outputs[5].OutputValue --output text)
-ssh -i MyFabric-keypair.pem ec2-user@$ec2url
+ssh -i MyFabric-keypair.pem -o "StrictHostKeyChecking no" ec2-user@$ec2url
 ```
 
 ### Set Blockchain Fabric Environment
