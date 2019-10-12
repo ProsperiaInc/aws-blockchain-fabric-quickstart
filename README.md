@@ -263,8 +263,13 @@ Delete "hyperledger-fabric-console" Instance
 
 #### Remove MyFabric-keypair
 Click on "Network & Security/Key Pairs" on the left hand menu  
-Select " MyFabric-keypair"  
-Click on "Delete"  
+Select "MyFabric-keypair"  
+Click on "Delete" 
+
+#### Remove launch-wizard-1 Security Group
+Click on "Network & Security/Security Groups" on the left hand menu  
+Select "launch-wizard-1"  
+Click on "Delete" 
 
 ## References
 
