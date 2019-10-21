@@ -276,16 +276,14 @@ Click on "Delete"
 ## References
 
 Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger  
-https://github.com/aws-samples/non-profit-blockchain  
+https://github.com/aws-samples/non-profit-blockchain/tree/master/ngo-fabric  
 
 Amazon Managed Blockchain How to build an application with Amazon Managed Blockchain
+https://www.youtube.com/watch?v=1br20axMBxw
+
 Michael Edge edgema@amazon.com  
 Sr. Blockchain Architect  
 AWS Professional Services
-
-Hyperledger Fabric Samples  
-https://github.com/hyperledger/fabric-samples  
-
 
 
 
