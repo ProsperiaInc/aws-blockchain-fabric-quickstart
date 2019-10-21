@@ -9,7 +9,7 @@ Steps:
 * [Create Amazon Managed Hyperledger Fabric Peer Node](#create-amazon-managed-hyperledger-fabric-peer-node)  
 * [Create AWS EC2 Hyperledger Console Instance](#create-aws-ec2-hyperledger-console-instance)  
 * [Create AWS EC2 Hyperledger Fabric Client Node](#create-aws-ec2-hyperledger-fabric-client-node)  
-* [Configure AWS EC2 Hyperledger Fabric Client Node and Enroll Identity](#configure-aws-ec2-hyperledger-fabric-client-node-and-build-blockchain-network)  
+* [Configure AWS EC2 Hyperledger Fabric Client Node and Build Blockchain Network](#configure-aws-ec2-hyperledger-fabric-client-node-and-build-blockchain-network)  
 * [Using the AWS EC2 Hyperledger Fabric Client Node](#using-the-aws-ec2-hyperledger-fabric-client-node)  
 * [Remove Your Amazon Managed Hyperledger Fabric Network](#remove-your-amazon-managed-hyperledger-fabric-network)  
 
@@ -156,6 +156,8 @@ Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS
 ``` 
 
 ## Configure AWS EC2 Hyperledger Fabric Client Node and Build Blockchain Network  
+
+### ssh into the Fabric Client Node
 You'll need to ssh into the AWS EC2 Hyperledger Fabric Client Node from your hyperledger-fabric-console.
 You can use the aws cli to get the ec2url to make it easier or you can just use "EC2URL Public DNS"
 you copied from the step above.
@@ -180,7 +182,7 @@ Test aws cli is configured properly by doing a simple test
 aws s3 ls
 ```
 ### Upgrade AWS CLI
-Upgrade the AWS Cli on the Fabric Client
+Upgrade the AWS Cli on the Fabric Client Node
 ```
 sudo pip install awscli --upgrade
 ```
