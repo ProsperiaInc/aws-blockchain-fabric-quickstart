@@ -1,13 +1,13 @@
 AWS Managed Hyperledger Fabric QuickStart  
 =========================================
-This solution shows you how to create an AWS Managed Hyperledger Fabric and how to deploy some sample chaincode. This project updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger" referenced below and but provides a more basic step by step process.
+This solution shows you how to create an AWS Managed Hyperledger Fabric and how to deploy some sample chaincode. This project updates an article "Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger Part 1"referenced below and but provides a more basic step by step process.
 
 ![AWS Managed Hyperledger Fabric](images/AWS-Managed-Blockchain-2.png?raw=true "AWS Managed Hyperledger Fabric")
 
 Steps:  
 * [Create Amazon Managed Hyperledger](#create-amazon-managed-hyperledger-and-first-member)  
 * [Create Amazon Managed Hyperledger Fabric Peer Node](#create-amazon-managed-hyperledger-fabric-peer-node)  
-* [Create AWS EC2 Hyperledger Console Instance](#create-aws-ec2-hyperledger-console-instance)  
+* [Create AWS EC2 Hyperledger Console Instance and Configure](#create-aws-ec2-hyperledger-console-instance-and-configure)  
 * [Create AWS EC2 Hyperledger Fabric Client Node](#create-aws-ec2-hyperledger-fabric-client-node)  
 * [Configure AWS EC2 Hyperledger Fabric Client Node and Build Blockchain Network](#configure-aws-ec2-hyperledger-fabric-client-node-and-build-blockchain-network)  
 * [Using the AWS EC2 Hyperledger Fabric Client Node](#using-the-aws-ec2-hyperledger-fabric-client-node)  
@@ -70,7 +70,7 @@ Note: Should take about 2 minutes to complete.
 Wait till you see "Available" appear in "Status" column under "Peer Nodes".
 ```
 
-## Create AWS EC2 Hyperledger Console Instance
+## Create AWS EC2 Hyperledger Console Instance and Configure
 Use AWS Console to configure the an EC2 Instance for blockchain fabric console.  This is a step by step process.
 
 ### AWS EC2 Dashboard  
@@ -115,8 +115,9 @@ ssh -i <AWS EC2 Private Key> ec2-user@<AWS EC2 Instance IP Address>
 See contents of "/tmp/install-blockchain-support" it should say "installation complete".
 
 ### Configure AWS CLI
-aws configure
+Configure the Access Key, Secret Key, and region.
 ```
+aws configure
 AWS Access Key ID []: <Your Access Key ID>
 AWS Secret Access Key []: <Your Secret Access Key>
 Default region name []: us-east-1
@@ -128,7 +129,8 @@ aws s3 ls
 ```
 
 ## Create AWS EC2 Hyperledger Fabric Client Node
-Use the EC2 Hyperledger Console Instance to create the AWS EC2 Hyperledger Fabric Client Node.  This is a step by step process.  
+Use the EC2 Hyperledger Console Instance to create the AWS EC2 Hyperledger Fabric Client Node.  This step  
+uses a CloudFormation script to build Fabric Client Node.  This is a step by step process.  
 
 ### Connect to EC2 Hyperledger Console Instance
 Using ssh from your local machine, connect to your AWS EC2 Instance tagged "hyperledger-fabric-console"  
@@ -278,7 +280,7 @@ Click on "Delete"
 ## References
 
 Building and deploying an application for Hyperledger Fabric on Amazon Managed Hyperledger  
-https://github.com/aws-samples/non-profit-blockchain/tree/master/ngo-fabric  
+https://github.com/aws-samples/non-profit-blockchain/blob/master/ngo-fabric/README.md 
 
 Amazon Managed Blockchain How to build an application with Amazon Managed Blockchain
 https://www.youtube.com/watch?v=1br20axMBxw
