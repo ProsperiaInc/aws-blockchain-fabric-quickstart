@@ -25,7 +25,7 @@ write_files:
         usermod -a -G docker ec2-user
  
         echo "git clone aws-blockchain-fabric-quickstart.git" >> /tmp/install-blockchain-support
-        runuser -l ec2-user -c 'git clone https://github.com/kskalvar/aws-blockchain-fabric-quickstart.git'
+        runuser -l ec2-user -c 'git clone https://github.com/ProsperiaInc/aws-blockchain-fabric-quickstart.git'
         
         echo "copy configure-blockchain-environment $HOME" >> /tmp/install-blockchain-support
         runuser -l ec2-user -c 'cp ~/aws-blockchain-fabric-quickstart/scripts/configure-blockchain-environment ~'
