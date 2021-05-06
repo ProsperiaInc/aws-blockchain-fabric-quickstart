@@ -86,6 +86,7 @@ Choose Instance Type
 t2.micro
 ```
 Click on "Next: Configure Instance Details"  
+Set IAM Role: ServiceRoleForHyperledgerFabricClient
 Expand Advanced Details
 (Make sure ./scripts/fabric-exports.sh.txt is up to date)
 ```
@@ -100,7 +101,14 @@ Click on "Add Tag"
 Key: Name
 Value: HLF
 ```
-Click on "Next: Configure Security Group"  
+Click on "Next: Configure Security Group" 
+Configure Security Group
+Select the following security groups after double checking that your IP address is whitelisted:
+```
+* default
+* HLFClientAndEndpoint
+* HFClientSSH
+```
 Click on "Review and Launch"    
 Click on "Launch"  
 ```
