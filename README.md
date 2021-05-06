@@ -86,7 +86,10 @@ Choose Instance Type
 t2.micro
 ```
 Click on "Next: Configure Instance Details"  
-Set IAM Role: ServiceRoleForHyperledgerFabricClient
+Set IAM Role: 
+```
+ServiceRoleForHyperledgerFabricClient
+```
 Expand Advanced Details
 (Make sure ./scripts/fabric-exports.sh.txt is up to date)
 ```
