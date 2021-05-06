@@ -21,7 +21,7 @@ Click on "Create a network"
 
 Hyperledger frameworks
 ```
-Hyperledger Fabric 1.2
+Hyperledger Fabric 1.4
 ```  
 Network edition
 ```
@@ -35,12 +35,12 @@ Click on "Next"
 
 Member configuration
 ```
-Member name: KAL-Technology
+Member name: Org1
 ```
 Hyperledger Fabric certificate authority (CA) configuration  
 ```
 Admin username: admin
-Admin password: Administration01
+Admin password: AdminAdmin123
 ```
 Click on "Next"  
 Click on "Create network and member"  
@@ -56,7 +56,7 @@ Click on "MyFabric"
 Click on "Members" tab 
  
 Locate "Members owned by you"  
-Select "KAL-Technology"  
+Select "Org1"  
 Click on "Create peer node"    
 
 Create peer node 
@@ -87,6 +87,7 @@ t2.micro
 ```
 Click on "Next: Configure Instance Details"  
 Expand Advanced Details
+(Make sure ./scripts/fabric-exports.sh.txt is up to date)
 ```
 User data
 Select "As text"
@@ -97,7 +98,7 @@ Click on "Next" Add Tags"
 Click on "Add Tag"
 ```
 Key: Name
-Value: hyperledger-fabric-console
+Value: HLF
 ```
 Click on "Next: Configure Security Group"  
 Click on "Review and Launch"    
@@ -133,7 +134,7 @@ Use the EC2 Hyperledger Console Instance to create the AWS EC2 Hyperledger Fabri
 uses a CloudFormation script to build Fabric Client Node.  This is a step by step process.  
 
 ### Connect to EC2 Hyperledger Console Instance
-Using ssh from your local machine, connect to your AWS EC2 Instance tagged "hyperledger-fabric-console"  
+Using ssh from your local machine, connect to your AWS EC2 Instance tagged "HLF"  
 
 ### Configure BlockChain Environment
 Configure BlockChain Fabric environment variables   
@@ -160,7 +161,7 @@ Click on the "Outputs" Tab and copy the value of the EC2URL Public DNS
 ## Configure AWS EC2 Hyperledger Fabric Client Node and Build Blockchain Network  
 
 ### ssh into the Fabric Client Node
-You'll need to ssh into the AWS EC2 Hyperledger Fabric Client Node from your hyperledger-fabric-console.
+You'll need to ssh into the AWS EC2 Hyperledger Fabric Client Node from your HLF.
 You can use the aws cli to get the ec2url to make it easier or you can just use "EC2URL Public DNS"
 you copied from the step above.
 ```
@@ -256,7 +257,7 @@ Click on "MyFabric"
 Click on "Members" tab  
 
 Locate "Members owned by you"    
-Select "KAL-Technology"  
+Select "Org1"  
 Click on "Delete member"  
 ```
 Note: This will delete the peer node, the member, and finally, the Fabric network.
@@ -265,7 +266,7 @@ Should take a couple of minutes to complete.
 ### AWS EC2 Dashboard
 #### Remove blockchain-console instance
 Click on "Instances/Instances" on the left hand menu  
-Delete "hyperledger-fabric-console" Instance  
+Delete "HLF" Instance  
 
 #### Remove MyFabric-keypair
 Click on "Network & Security/Key Pairs" on the left hand menu  
@@ -285,6 +286,7 @@ https://github.com/aws-samples/non-profit-blockchain
 Amazon Managed Blockchain How to build an application with Amazon Managed Blockchain
 https://www.youtube.com/watch?v=1br20axMBxw
 
+Original author:
 Michael Edge edgema@amazon.com  
 Sr. Blockchain Architect  
 AWS Professional Services

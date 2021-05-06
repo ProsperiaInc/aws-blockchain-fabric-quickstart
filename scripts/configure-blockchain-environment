@@ -7,7 +7,7 @@
 
 region=us-east-1
 adminuser=admin
-adminpwd=Administration01
+adminpwd=AdminAdmin123
 
 # This will use aws cli to populate environment variables with the correct values
 
